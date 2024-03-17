@@ -1,0 +1,144 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+        </Border>
+    </Design.PreviewWith>
+
+    
+    <!-- Add Styles Here -->
+    <Style Selector="Window">
+        <Setter Property="Icon" Value="../Assets/niwaki.ico" />
+    </Style>
+    <Style Selector="Window#Main">
+        <Setter Property="Background">
+            <ImageBrush Source="../Assets/background_3.png" TileMode="None" Stretch="UniformToFill" AlignmentX="Center" AlignmentY="Center"/>
+        </Setter>
+    </Style>
+    <Style Selector="Border#BtnBack">
+        <Setter Property="Background" Value="rgba(0,0,0,0.7)" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Padding" Value="10" />
+        <Setter Property="Margin" Value="0, 5, 0, 0  " />
+        <Setter Property="MaxWidth" Value="800" />
+        <Setter Property="Height" Value="250" />
+    </Style>
+    <Style Selector="Border#RamBack">
+        <Setter Property="Background" Value="rgba(0,0,0,0.7)" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Padding" Value="10" />
+        <Setter Property="Margin" Value="0, 5, 0, 60  " />
+        <Setter Property="MaxWidth" Value="800" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+    
+    <Style Selector="Border#ProgressBack">
+        <Setter Property="Background" Value="rgba(0,0,0,0.7)" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Padding" Value="10" />
+        <Setter Property="Margin" Value="0, 5, 0, 0  " />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+    </Style>
+    
+    <Style Selector="Button#MicrosoftAuthButton">
+        <Setter Property="Background" Value="Green" />
+        <Setter Property="Opacity" Value="0.9" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="Padding" Value="10" />
+        <Setter Property="Cursor" Value="Hand"/>
+    </Style>
+    <Style Selector="Button#MicrosoftAuthButton:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="DarkGreen" />
+        <Setter Property="Opacity" Value="0.9" />
+    </Style>
+    <!-- 7F0072 -->
+    
+    
+    <Style Selector="Button#LaunchGameButton">
+        <Setter Property="Background" Value="#4800FF" />
+        <Setter Property="Opacity" Value="0.9" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="25" />
+        <Setter Property="Padding" Value="20" />
+    </Style>
+    
+    <Style Selector="TextBlock#RamShow">
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+    <Style Selector="TextBlock#ProgressLabel">
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+    
+    <Style Selector="Button#LaunchGameButton:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="#3900D8" />
+        <Setter Property="Opacity" Value="0.9" />
+    </Style>
+    
+    <Style Selector="StackPanel#ButtonsData">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0,10,0,10" />
+    </Style>
+    
+    <Style Selector="StackPanel#ButtonsData Button">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0,10,0,10" />
+    </Style>
+    
+    <Style Selector="Button">
+        <Setter Property="Cursor" Value="Hand"/>
+    </Style>
+    <Style Selector="TextBlock#ConnectionText">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Width" Value="338"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="Padding" Value="3" />
+        <Setter Property="FontFamily" Value="{StaticResource Parchment}" />
+        <Setter Property="FontSize" Value="35" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="Black" />
+    </Style>
+    
+    <Style Selector="StackPanel#LaunchInfo">
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+    </Style>
+    <Style Selector="Button#Logout">
+        <Setter Property="Background" Value="Green" />
+        <Setter Property="Opacity" Value="0.9" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="0, 10, 0, 0"/>
+        <Setter Property="Padding" Value="20" />
+        <Setter Property="FontSize" Value="25" />
+    </Style>
+    <Style Selector="Button#Logout:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="DarkGreen" />
+        <Setter Property="Opacity" Value="0.9" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+    <Style Selector="Border#ConnectionStatus">
+        <Setter Property="Background">
+            <ImageBrush Source="../Assets/closed_parchment.png" TileMode="None" Stretch="Uniform" AlignmentX="Left" />
+        </Setter>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Padding" Value="38"/>
+        <Setter Property="Width" Value="415"/>
+        <Setter Property="Height" Value="268"/>
+    </Style>
+    <Style Selector="Border#ConnectionStatus.Opened">
+        <Setter Property="Background">
+            <ImageBrush Source="../Assets/parchment.png" TileMode="None" Stretch="Uniform" />
+        </Setter>
+    </Style>
+    
+    <Style Selector="ProgressBar">
+        <Setter Property="Background" Value="rgba(255,255,255,0.5)"/>
+    </Style>
+    
+    
+</Styles>

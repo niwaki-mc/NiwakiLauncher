@@ -1,0 +1,41 @@
+# Ignore les fichiers générés par Visual Studio Code
+.vscode/
+
+# Ignore les fichiers de build générés par dotnet
+bin/
+obj/
+
+# Ignore les fichiers de log et de cache de JetBrains Rider
+.idea/
+*.sln.iml
+
+# Ignore les fichiers de build de JetBrains Rider
+out/
+
+# Ignore les fichiers de configuration spécifiques à l'utilisateur de JetBrains Rider
+*.DotSettings
+
+# Ignore les fichiers de cache et de journalisation de JetBrains Rider
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/shelf/
+
+# Ignore les fichiers de sauvegarde et les fichiers de swap de JetBrains Rider
+*.swp
+*~
+
+# Ignore les fichiers de compilation et les fichiers de sauvegarde de JetBrains Rider
+*.csproj.user
+
+# Ignore les fichiers de compilation .NET Core
+*.dll
+*.exe
+*.pdb
+*.cache
+*.log
+*.vscode/
+
+# Ignore les fichiers de cache NuGet
+*.nuget/

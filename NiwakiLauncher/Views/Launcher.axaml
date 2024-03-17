@@ -1,0 +1,87 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:NiwakiLauncher.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="NiwakiLauncher.Views.Launcher"
+        x:DataType="vm:LauncherViewModel"
+        Title="{Binding Title}"
+        x:Name="Main"
+        >
+
+
+    <Grid Margin="20"> 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border x:Name="ConnectionStatus" Classes.Opened="{Binding IsConnected}">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                <TextBlock x:Name="ConnectionText" Text="{Binding ConnectionStatus}"/>
+            </StackPanel>
+        </Border>
+        
+        <Border x:Name="BtnBack" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <StackPanel x:Name="ButtonsData" Orientation="Vertical">
+                <!-- Microsoft Authentication button -->
+                <Button IsEnabled="{Binding !IsUpdateRunning}" IsVisible="{Binding !IsConnected}" x:Name="MicrosoftAuthButton" Command="{Binding MicrosoftAuthenticationCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Assets/ye_old_microsoft.png" Width="70"/> 
+                        <TextBlock Text="Se connecter (Microsoft)" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button IsEnabled="{Binding !IsUpdateRunning}" x:Name="Logout" IsVisible="{Binding IsConnected}" Content="Se déconnecter" Command="{Binding Logout}"></Button>
+
+
+                <!-- Start the Game button -->
+                <Button IsEnabled="{Binding !IsUpdateRunning}" x:Name="LaunchGameButton" Content="Lancer le jeu" Command="{Binding LaunchGameCommand}" />
+            </StackPanel>
+        </Border>
+        <Border x:Name="RamBack" Grid.Row="2" Grid.Column="0" >
+            <StackPanel Orientation="Vertical">
+                <TextBlock x:Name="RamShow">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="RAM: {0} GB (Maximum {1} GB)">
+                            <Binding Path="SelectedRam" />
+                            <Binding Path="MaxRam" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <Slider 
+                    IsEnabled="{Binding !IsUpdateRunning}"
+                    Minimum="4" Maximum="{Binding MaxRam}"
+                    Value="{Binding SelectedRam}" 
+                    TickFrequency="1" 
+                    IsSnapToTickEnabled="True" 
+                    MaxWidth="200">
+                    <Slider.Resources>
+                        <Color x:Key="SliderThumbBackground">#7F0072</Color>
+                        <Color x:Key="SliderThumbBackgroundPointerOver">#C400B3</Color>
+                        <Color x:Key="SliderThumbBackgroundPressed">#C400B3</Color>
+                        <x:Double x:Key="SliderHorizontalThumbWidth">11</x:Double>
+                        <x:Double x:Key="SliderHorizontalThumbHeight">11</x:Double>
+                        <Color x:Key="SliderTrackValueFill">#7F0072</Color>
+                        <Color x:Key="SliderTrackValueFillPointerOver">#C400B3</Color>
+                        <Color x:Key="SliderTrackValueFillPressed">#C400B3</Color>
+                    </Slider.Resources>
+                </Slider>
+            </StackPanel>
+        </Border>
+       
+        <Border x:Name="ProgressBack" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" >
+            <StackPanel Orientation="Vertical" x:Name="LaunchInfo" >
+                <TextBlock x:Name="ProgressLabel" Text="{Binding Text}"></TextBlock>
+                <ProgressBar x:Name="LaunchProgress" IsIndeterminate="{Binding InderminateTime}" Value="{Binding Progress}" ShowProgressText="True" Minimum="0" Maximum="100" />
+            </StackPanel>
+        </Border>
+        
+        
+    </Grid>
+</Window>
