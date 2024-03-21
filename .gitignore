@@ -39,3 +39,6 @@ out/
 
 # Ignore les fichiers de cache NuGet
 *.nuget/
+
+# Ignorer le fichier d'authentification Firebase
+**/secret_token.json

@@ -10,9 +10,13 @@ using System.Windows;
 using CmlLib.Core;
 using CmlLib.Core.Auth;
 using CmlLib.Core.Auth.Microsoft;
+using Firebase.Database;
+using Firebase.Database.Query;
+using Google.Apis.Auth.OAuth2;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Base;
-using MsBox.Avalonia.Enums;
+using MsBox.Avalonia.Dto;
+using MsBox.Avalonia.Models;
 using NetSparkleUpdater;
 using NetSparkleUpdater.Enums;
 using NetSparkleUpdater.SignatureVerifiers;
@@ -212,12 +216,62 @@ public class LauncherViewModel : ViewModelBase
         {
             message = preMessage + " ";
         }
+        
         message +=  $"{e.Message}";
-        IMsBox<ButtonResult>? messageBoxStandardWindow = MessageBoxManager
-            .GetMessageBoxStandard("Erreur", message, ButtonEnum.Ok, Icon.Error);
-        await messageBoxStandardWindow.ShowAsPopupAsync(_window);
+        IMsBox<string>? messageBoxStandardWindow = MessageBoxManager
+            // .GetMessageBoxStandard("Erreur", message, ButtonEnum.Ok, Icon.Error);
+            .GetMessageBoxCustom(new MessageBoxCustomParams
+            {
+                ButtonDefinitions = new []
+                {
+                    new ButtonDefinition
+                    {
+                        Name = "OK"
+                    },
+                    new ButtonDefinition()
+                    {
+                        Name = "Envoyer le rapport de bug"
+                    }
+                },
+                Icon = Icon.Error,
+                ContentTitle = "Erreur",
+                ContentHeader = "Une erreur est survenue",
+                ContentMessage = message
+            });
+        string ret = await messageBoxStandardWindow.ShowAsPopupAsync(_window);
+        if (ret == "Envoyer le rapport de bug")
+        {
+            FirebaseClient client = new FirebaseClient(
+                "https://niwaki-93197-default-rtdb.europe-west1.firebasedatabase.app/", new FirebaseOptions()
+                {
+                    AuthTokenAsyncFactory = GetAccessToken, 
+                    AsAccessToken = true
+                });
+
+            await client.Child("reports").Child(Guid.NewGuid().ToString().Replace("/", "(@)")).PostAsync(new ReportData()
+            {
+                MinecraftUserName = _session?.Username,
+                // ComputerUserName = System.Security.Principal.WindowsIdentity.GetCurrent().Name,
+                ComputerUserName = Environment.UserName,
+                ErrorMessage = message,
+                DetailedError = JsonConvert.SerializeObject(e, Formatting.Indented)
+            });
+        }
+        
     }
-    
+
+    private static async Task<string> GetAccessToken()
+    {
+        GoogleCredential? credential = GoogleCredential.FromFile("Supplementaries/secret_token.json").CreateScoped(new[]
+        {
+            "https://www.googleapis.com/auth/userinfo.email",
+            "https://www.googleapis.com/auth/firebase.database"
+        });
+        ITokenAccess c = credential;
+        
+        return await c.GetAccessTokenForRequestAsync();
+    }
+
     #endregion
 
     #region Methodes Appelée en vue
@@ -267,49 +321,53 @@ public class LauncherViewModel : ViewModelBase
     /// </exception>
     public async void LaunchGameCommand()
     {
-        DataSave ds = new DataSave()
-        {
-            SelectedRam = SelectedRam
-        };
-        
-        FileHelper.InitFileIfNotExists(Path);
-        
-        await File.WriteAllTextAsync(Path, JsonConvert.SerializeObject(ds, Formatting.Indented));
-
-        await FileHelper.DownloadFileFromWebServerWithProgress(BaseUrl, "neoforge_1.20.1.json", BasePath, System.IO.Path.Combine("versions", "neoforge_1.20.1"), (done, total) =>
-        {
-            Text = $"Téléchargement de la version du jeu : {done}/{total}";
-            Progress = (done * 1.0 / total * 1.0) * 100;
-        });
-        
-        Progress = 0.0;
-        Text = "Obtention des librairies ...";
-        InderminateTime = true;
-        
-        await FileHelper.DownloadFileFromWebServerWithProgress(BaseUrl, "libs.zip", BasePath, "libraries", (done, total) =>
-        {
-            InderminateTime = false;
-            Text = $"Téléchargement des librairies nécessaires : {done}/{total}";
-            Progress = (done * 1.0 / total * 1.0) * 100;
-        });
-        
-        Progress = 0.0;
-        Text = "Extraction des librairies";
-        InderminateTime = true;
-
-        await FileHelper.ExtractAndDeleteZip(BasePath, "libraries", "libs.zip");
-        
-        InderminateTime = false;
-
         try
         {
+
             if (_session is null)
             {
                 throw new AuthenticationException("Veuillez vous authentifier avant de lancer le jeu");
             }
 
+            DataSave ds = new DataSave()
+            {
+                SelectedRam = SelectedRam
+            };
 
-            _launcher = LauncherHelper.InitLauncher(BasePath, (e) => { Text = $"Verification : {e.FileKind} ({e.ProgressedFileCount}/{e.TotalFileCount})"; }, (_, e) => { Progress = e.ProgressPercentage; });
+            FileHelper.InitFileIfNotExists(Path);
+
+            await File.WriteAllTextAsync(Path, JsonConvert.SerializeObject(ds, Formatting.Indented));
+
+            await FileHelper.DownloadFileFromWebServerWithProgress(BaseUrl, "neoforge_1.20.1.json", BasePath,
+                System.IO.Path.Combine("versions", "neoforge_1.20.1"), (done, total) =>
+                {
+                    Text = $"Téléchargement de la version du jeu : {done}/{total}";
+                    Progress = (done * 1.0 / total * 1.0) * 100;
+                });
+
+            Progress = 0.0;
+            Text = "Obtention des librairies ...";
+            InderminateTime = true;
+
+            await FileHelper.DownloadFileFromWebServerWithProgress(BaseUrl, "libs.zip", BasePath, "libraries",
+                (done, total) =>
+                {
+                    InderminateTime = false;
+                    Text = $"Téléchargement des librairies nécessaires : {done}/{total}";
+                    Progress = (done * 1.0 / total * 1.0) * 100;
+                });
+
+            Progress = 0.0;
+            Text = "Extraction des librairies";
+            InderminateTime = true;
+
+            await FileHelper.ExtractAndDeleteZip(BasePath, "libraries", "libs.zip");
+
+            InderminateTime = false;
+
+            _launcher = LauncherHelper.InitLauncher(BasePath,
+                (e) => { Text = $"Verification : {e.FileKind} ({e.ProgressedFileCount}/{e.TotalFileCount})"; },
+                (_, e) => { Progress = e.ProgressPercentage; });
 
 
 
@@ -337,6 +395,11 @@ public class LauncherViewModel : ViewModelBase
         catch (Exception e)
         {
             await ShowError("Une erreur est survenue :", e);
+        }
+        finally
+        {
+            Progress = 0.0;
+            Text = "En attente ...";
         }
 
 

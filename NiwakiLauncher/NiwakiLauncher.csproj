@@ -7,7 +7,7 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <ApplicationIcon>Assets\niwaki.ico</ApplicationIcon>
-        <Version>1.1.7</Version>
+        <Version>1.1.7-debug</Version>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <DebugType>embedded</DebugType>
@@ -28,6 +28,8 @@
         <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.10" />
         <PackageReference Include="CmlLib.Core" Version="3.3.10" />
         <PackageReference Include="CmlLib.Core.Auth.Microsoft" Version="3.0.2" />
+        <PackageReference Include="FirebaseDatabase.net" Version="4.2.0" />
+        <PackageReference Include="Google.Apis.Auth" Version="1.67.0" />
         <PackageReference Include="MessageBox.Avalonia" Version="3.1.5.1" />
         <PackageReference Include="NetSparkleUpdater.UI.Avalonia" Version="3.0.0-preview20240219001" />
         <PackageReference Include="PresentationFramework" Version="4.6.0" />
@@ -50,5 +52,8 @@
       <EmbeddedResource Include="Fonts\ardecode.ttf">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </EmbeddedResource>
+      <None Update="Supplementaries\secret_token.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 </Project>
