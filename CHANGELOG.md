@@ -129,3 +129,5 @@ Aucun
 ### Bugfixes
 
 - Correction du double lancement après update
+
+- I love you Wither :) xD
