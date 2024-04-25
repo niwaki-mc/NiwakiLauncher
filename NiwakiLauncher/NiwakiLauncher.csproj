@@ -7,7 +7,7 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <ApplicationIcon>Assets\niwaki.ico</ApplicationIcon>
-        <Version>1.1.7-debug</Version>
+        <Version>1.1.8</Version>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <DebugType>embedded</DebugType>
