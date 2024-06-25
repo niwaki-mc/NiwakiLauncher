@@ -31,7 +31,7 @@
         <PackageReference Include="FirebaseDatabase.net" Version="4.2.0" />
         <PackageReference Include="Google.Apis.Auth" Version="1.67.0" />
         <PackageReference Include="MessageBox.Avalonia" Version="3.1.5.1" />
-        <PackageReference Include="NetSparkleUpdater.UI.Avalonia" Version="3.0.0-preview20240219001" />
+        <PackageReference Include="NetSparkleUpdater.UI.Avalonia" Version="3.0.0-preview20240613001" />
         <PackageReference Include="PresentationFramework" Version="4.6.0" />
         <PackageReference Include="System.Management" Version="9.0.0-preview.1.24080.9" />
     </ItemGroup>
