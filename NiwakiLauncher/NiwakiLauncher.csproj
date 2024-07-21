@@ -27,7 +27,7 @@
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.11" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.11" />
         <PackageReference Include="CmlLib.Core" Version="4.0.0" />
-        <PackageReference Include="CmlLib.Core.Auth.Microsoft" Version="3.0.2" />
+        <PackageReference Include="CmlLib.Core.Auth.Microsoft" Version="3.1.0" />
         <PackageReference Include="FirebaseDatabase.net" Version="4.2.0" />
         <PackageReference Include="Google.Apis.Auth" Version="1.68.0" />
         <PackageReference Include="MessageBox.Avalonia" Version="3.1.5.1" />
